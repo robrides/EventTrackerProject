@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>RideTracker</name>
-	<comment>Project RideTracker created by Buildship.</comment>
+	<name>RideTrackerJPA</name>
+	<comment>Project RideTrackerJPA created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
