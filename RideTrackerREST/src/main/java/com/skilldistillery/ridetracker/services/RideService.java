@@ -9,4 +9,12 @@ public interface RideService {
 //	public List<Ride> getAllRides(Integer id);
 	public Ride fingdById(Integer id);
 
+	public List<Ride> findAll();
+
+	public Ride addRide(Ride r);
+
+	public Ride replaceRide(int id, Ride r);
+
+	public Boolean deletePost(int id);
+
 }
