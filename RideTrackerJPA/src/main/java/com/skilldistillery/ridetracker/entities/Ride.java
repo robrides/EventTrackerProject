@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Ride {
@@ -34,7 +36,7 @@ public class Ride {
 	@Column(name="zipcode_end")
 	private String zipcodeEnd;
 	private Double distance;
-	private Date duration;
+	private int duration;
 	private int calories;
 	@Column(name = "avg_pwr")
 	private int avgPwr;
@@ -46,15 +48,21 @@ public class Ride {
 	private String activityUrl;
 	private String comments;
 	private int rating;
+	@Temporal(TemporalType.DATE)
+	private Date date;
 	
-	
-	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public Ride() {
 		super();
 	}
 	public Ride(int id, String name, String description, String bike, String addressStart, String cityStart,
 			String stateStart, String zipcodeStart, String addressEnd, String cityEnd, String stateEnd,
-			String zipcodeEnd, Double distance, Date duration, int calories, int avgPwr, int avgHr, String courseUrl,
+			String zipcodeEnd, Double distance, int duration, int calories, int avgPwr, int avgHr, String courseUrl,
 			String activityUrl, String comments, int rating) {
 		super();
 		this.id = id;
@@ -157,10 +165,10 @@ public class Ride {
 	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
-	public Date getDuration() {
+	public int getDuration() {
 		return duration;
 	}
-	public void setDuration(Date duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 	public int getCalories() {
@@ -270,6 +278,8 @@ public class Ride {
 		builder.append(comments);
 		builder.append(", rating=");
 		builder.append(rating);
+		builder.append(", date=");
+		builder.append(date);
 		builder.append("]");
 		return builder.toString();
 	}

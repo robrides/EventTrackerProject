@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `ride` (
   `city_end` VARCHAR(45) NULL,
   `state_end` VARCHAR(45) NULL,
   `zipcode_end` VARCHAR(45) NULL,
-  `distance` INT NULL,
+  `distance` DECIMAL(3,1) NULL,
   `duration` TIME NULL,
   `calories` INT NULL,
   `avg_pwr` INT NULL,
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `ride` (
   `rating` INT(5) NULL,
   `description` VARCHAR(500) NULL,
   `name` VARCHAR(45) NULL,
+  `date` DATE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
