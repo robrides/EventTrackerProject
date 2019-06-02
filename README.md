@@ -29,7 +29,9 @@ This is a Java Persistence Application Programming Interface (JPA API), Spring R
 
 ### UML Diagram
 
-![UML Diagram](https://)
+![UML Diagram - JPA](https://github.com/robrides/EventTrackerProject/blob/master/RideTrackerJPA/RideTrackerUML.png)
+
+![UML Diagram - REST](https://github.com/robrides/EventTrackerProject/blob/master/RideTrackerREST/RideTrackerUML_REST.png)
 
 ### Entity Relationship Diagram
 
