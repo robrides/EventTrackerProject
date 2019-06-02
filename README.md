@@ -4,10 +4,6 @@
 ### Overview
 This is a Java Persistence Application Programming Interface (JPA API), Spring REST, full-stack webapp with full CRUD functionality. The objective in developing this application was to reenforce the steps to build and deploy a full-stack REST and JPA webapp.  
 
-#### View the application live...
-
-[Ride Tracker - link coming soon](http://www.robcodes.pro)
-
 ### Available API Routes
 
 | Return Type | Route                 | Functionality                  |
@@ -17,6 +13,10 @@ This is a Java Persistence Application Programming Interface (JPA API), Spring R
 | `Ride`        |`POST api/rides`       | Creates a new ride             |
 | `Ride`        |`PUT api/rides/{id}`   | Replaces an existing rides by id|
 | `Boolean`     |`DELETE api/rides/{id}`| Deletes an existing rides by id |
+
+#### Hit the APIs Live
+
+http://54.214.129.164:8080/RideTrackerREST
 
 ### Installation
 

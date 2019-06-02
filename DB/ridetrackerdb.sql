@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `ride` (
   `state_end` VARCHAR(45) NULL,
   `zipcode_end` VARCHAR(45) NULL,
   `distance` DECIMAL(3,1) NULL,
-  `duration` TIME NULL,
+  `duration` INT NULL,
   `calories` INT NULL,
   `avg_pwr` INT NULL,
   `avg_hr` INT NULL,
@@ -56,3 +56,13 @@ GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'ridetrackeruser'@'l
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `ride`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `ridetrackerdb`;
+INSERT INTO `ride` (`id`, `bike`, `address_start`, `city_start`, `state_start`, `zipcode_start`, `address_end`, `city_end`, `state_end`, `zipcode_end`, `distance`, `duration`, `calories`, `avg_pwr`, `avg_hr`, `course_url`, `activity_url`, `comments`, `rating`, `description`, `name`, `date`) VALUES (1, 'Gravel', '4400 S Quebec St', 'Denver', 'CO', '80237', '4400 S Quebec St', 'Denver', 'CO', '80237', 35.5, 4500, 750, 190, 155, 'https://ridewithgps.com/routes/29705143', '', 'City riding', 3, 'description', 'Gravel Run', '2019-05-11');
+
+COMMIT;
+
