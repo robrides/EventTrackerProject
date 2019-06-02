@@ -37,7 +37,7 @@ This is a Java Persistence Application Programming Interface (JPA API), Spring R
 
 ![ERD](https://github.com/robrides/EventTrackerProject/blob/master/DB/ridetrackerdbERD.png)
 
-### Technologies Used - under construction
+### Technologies Used
 
 Spring Tool Suite (STS/Eclipse), Spring REST, Spring Data JPA, Java, Hibernate, Gradle, Tomcat, MySQL, MySQL WorkBench, C.R.U.D functionality, MAMP (MacOS, Apache, MySQL, PHP/Python/Perl(Not used)), log4j, JDK, Atom, Bash Terminal
 
