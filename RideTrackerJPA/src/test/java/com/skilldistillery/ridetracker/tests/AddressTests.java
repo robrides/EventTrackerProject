@@ -12,18 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.skilldistillery.ridetracker.entities.Ride;
+import com.skilldistillery.ridetracker.entities.Address;
 
-class RideTests {
-
-//	@Test
-//	void test() {
-//		fail("Not yet implemented");
-//	}
+public class AddressTests {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Ride ride;
+	private Address addy;
 
 	@BeforeAll
 	public static void setupAll() {
@@ -38,28 +33,28 @@ class RideTests {
 	@BeforeEach
 	public void setUp() {
 		em = emf.createEntityManager();
-		ride = em.find(Ride.class, 1);
+		addy = em.find(Address.class, 1);
 	}
 
 	@AfterEach
 	public void tearDown() {
 		em.close();
-		ride = null;
+		addy = null;
 	}
 	
 	@Test
-	public void test_ride_getName() {
-		assertEquals("Cherry Creek Trail", ride.getName());
+	public void test_address_getAddress() {
+		assertEquals("4400 S Quebec St", addy.getAddress());
 	}
 	
 	@Test
-	public void test_ride_getDescription() {
-		assertEquals("Bike trail, Denver CO", ride.getDescription());
+	public void test_address_getCity() {
+		assertEquals("Denver", addy.getCity());
 	}
-
+	
 	@Test
-	public void test_ride_getRideDate() {
-		assertEquals("2019-03-24", ride.getRideDate().toString());
+	public void test_address_getState() {
+		assertEquals("CO", addy.getState());
 	}
 	
 }

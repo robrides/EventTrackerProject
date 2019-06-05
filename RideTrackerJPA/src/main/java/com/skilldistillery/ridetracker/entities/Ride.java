@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,22 +21,6 @@ public class Ride {
 	private String name;
 	private String description;
 	private String bike;
-	@Column(name="address_start")
-	private String addressStart;
-	@Column(name="city_start")
-	private String cityStart;
-	@Column(name="state_start")
-	private String stateStart;
-	@Column(name="zipcode_start")
-	private String zipcodeStart;
-	@Column(name="address_end")
-	private String addressEnd;
-	@Column(name="city_end")
-	private String cityEnd;
-	@Column(name="state_end")
-	private String stateEnd;
-	@Column(name="zipcode_end")
-	private String zipcodeEnd;
 	private Double distance;
 	private int duration;
 	private int calories;
@@ -48,35 +34,26 @@ public class Ride {
 	private String activityUrl;
 	private String comments;
 	private int rating;
-	@Temporal(TemporalType.DATE)
-	private Date date;
 	
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	@Column(name="ride_date")
+	@Temporal(TemporalType.DATE)
+	private Date rideDate;
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
+	
 	public Ride() {
 		super();
 	}
-	public Ride(int id, String name, String description, String bike, String addressStart, String cityStart,
-			String stateStart, String zipcodeStart, String addressEnd, String cityEnd, String stateEnd,
-			String zipcodeEnd, Double distance, int duration, int calories, int avgPwr, int avgHr, String courseUrl,
-			String activityUrl, String comments, int rating) {
+	
+	public Ride(int id, String name, String description, String bike, Double distance, int duration, int calories,
+			int avgPwr, int avgHr, String courseUrl, String activityUrl, String comments, int rating, Date rideDate,
+			Address address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.bike = bike;
-		this.addressStart = addressStart;
-		this.cityStart = cityStart;
-		this.stateStart = stateStart;
-		this.zipcodeStart = zipcodeStart;
-		this.addressEnd = addressEnd;
-		this.cityEnd = cityEnd;
-		this.stateEnd = stateEnd;
-		this.zipcodeEnd = zipcodeEnd;
 		this.distance = distance;
 		this.duration = duration;
 		this.calories = calories;
@@ -86,6 +63,23 @@ public class Ride {
 		this.activityUrl = activityUrl;
 		this.comments = comments;
 		this.rating = rating;
+		this.rideDate = rideDate;
+		this.address = address;
+	}
+
+
+
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public Date getRideDate() {
+		return rideDate;
+	}
+	public void setRideDate(Date rideDate) {
+		this.rideDate = rideDate;
 	}
 	public int getId() {
 		return id;
@@ -110,54 +104,6 @@ public class Ride {
 	}
 	public void setBike(String bike) {
 		this.bike = bike;
-	}
-	public String getAddressStart() {
-		return addressStart;
-	}
-	public void setAddressStart(String addressStart) {
-		this.addressStart = addressStart;
-	}
-	public String getCityStart() {
-		return cityStart;
-	}
-	public void setCityStart(String cityStart) {
-		this.cityStart = cityStart;
-	}
-	public String getStateStart() {
-		return stateStart;
-	}
-	public void setStateStart(String stateStart) {
-		this.stateStart = stateStart;
-	}
-	public String getZipcodeStart() {
-		return zipcodeStart;
-	}
-	public void setZipcodeStart(String zipcodeStart) {
-		this.zipcodeStart = zipcodeStart;
-	}
-	public String getAddressEnd() {
-		return addressEnd;
-	}
-	public void setAddressEnd(String addressEnd) {
-		this.addressEnd = addressEnd;
-	}
-	public String getCityEnd() {
-		return cityEnd;
-	}
-	public void setCityEnd(String cityEnd) {
-		this.cityEnd = cityEnd;
-	}
-	public String getStateEnd() {
-		return stateEnd;
-	}
-	public void setStateEnd(String stateEnd) {
-		this.stateEnd = stateEnd;
-	}
-	public String getZipcodeEnd() {
-		return zipcodeEnd;
-	}
-	public void setZipcodeEnd(String zipcodeEnd) {
-		this.zipcodeEnd = zipcodeEnd;
 	}
 	public Double getDistance() {
 		return distance;
@@ -244,22 +190,6 @@ public class Ride {
 		builder.append(description);
 		builder.append(", bike=");
 		builder.append(bike);
-		builder.append(", addressStart=");
-		builder.append(addressStart);
-		builder.append(", cityStart=");
-		builder.append(cityStart);
-		builder.append(", stateStart=");
-		builder.append(stateStart);
-		builder.append(", zipcodeStart=");
-		builder.append(zipcodeStart);
-		builder.append(", addressEnd=");
-		builder.append(addressEnd);
-		builder.append(", cityEnd=");
-		builder.append(cityEnd);
-		builder.append(", stateEnd=");
-		builder.append(stateEnd);
-		builder.append(", zipcodeEnd=");
-		builder.append(zipcodeEnd);
 		builder.append(", distance=");
 		builder.append(distance);
 		builder.append(", duration=");
@@ -278,8 +208,10 @@ public class Ride {
 		builder.append(comments);
 		builder.append(", rating=");
 		builder.append(rating);
-		builder.append(", date=");
-		builder.append(date);
+		builder.append(", rideDate=");
+		builder.append(rideDate);
+		builder.append(", address=");
+		builder.append(address);
 		builder.append("]");
 		return builder.toString();
 	}
