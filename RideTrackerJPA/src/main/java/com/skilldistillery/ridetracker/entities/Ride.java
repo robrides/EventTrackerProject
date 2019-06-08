@@ -2,8 +2,10 @@ package com.skilldistillery.ridetracker.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +40,7 @@ public class Ride {
 	@Column(name="ride_date")
 	@Temporal(TemporalType.DATE)
 	private Date rideDate;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id")
 	private Address address;
 	
