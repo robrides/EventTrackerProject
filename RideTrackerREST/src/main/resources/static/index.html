@@ -3,67 +3,60 @@
   <head>
     <meta charset="utf-8">
     <title>Ride Tracker</title>
-    <script src="/js/script.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/script.js" charset="utf-8"></script>
     <style>
-/*     body {
-   		pointer-events: none;
-	} */
+	table, td, th {
+	  border: 1px solid black;
+	  	margin-left:auto;
+		margin-right:auto;
+	}
+	h1,h2,h3,h4,h5,h6,p{
+	text-align: center;
+	}
     </style>
   </head>
   <body>
 
   <h1>Welcome to Ride Tracker!</h1>
-
+  	  	<table style="max-width:500px; content: center">
+  	<tr>
+  	<td>
   <form name="rideForm">
     <input type="number" name="rideId">
     <button name="lookup">Get Ride by Id</button>
   </form>
+  </td>
+  </tr>
+  </table>
   <div id="output">
-    <div id="rideData"></div>
+    <div id="rideData" style="text-align: center"></div><hr>
     <div id="otherData"></div>
   </div>
-  <div>
-  	<h2>Add a Ride...</h2>
-        <form name='rideAdd'>
-        <input type='text' name='name' placeholder='Ride name...' />
-        <input type='date' name='rideDate' placeholder='Ride date...' /><br>
-        <input type='text' name='description' placeholder='Description...' /><br>
-        <input type='text' name='bike' placeholder='Bike...' />
-        <input type='number' name='distance' placeholder='Distance, e.g. 45.35' />
-        <input type='number' name='duration' placeholder='Duration in seconds...' />
-        <input type='number' name='calories' placeholder='Calories burned...' /><br>
-        <input type='number' name='avgPwr' placeholder='Average power...' />
-        <input type='number' name='avgHr' placeholder='Average heartrate...' /><br>
-        <input type='text' name='courseUrl' placeholder='Course URL...' /><br>
-        <input type='text' name='activityUrl' placeholder='Activity URL...' /><br>
-        <input type='text' name='comments' placeholder='Comments...' /><br>
-        <input type='number' name='rating' placeholder='Rating: 1 - 5...' /><br>
-        <input type='text' name='address' placeholder='123 The Street' />
-        <input type='text' name='address2' placeholder='Apt...' /><br>
-        <input type='text' name='city' placeholder='City' />
-        <input type='text' name='state' placeholder='State' />
-        <input type='text' name='zipcode' placeholder='Zipcode' /><br><br>
-        <input type='submit' name='submit' value='Submit' /><br><hr>
-      </form>
-	</div>
-	<div id="ridesList">
-	</div>
-  <div>
+	<h2 style="text-align: center">Rides...</h2>
+	<p>Click a ride to edit.</p>  
+  	<div id="ridesList">
+	</div><hr>
+	  <div >
   	<h2>Edit a Ride...</h2>
+  	<div id='editRideDiv'>
+  	</div>
+  	  	<table style="max-width:500px; content: center">
+  	<tr>
+  	<td>
         <form id='rideEdit' name='rideEdit'>
         <input type='text' name='id' placeholder='' disabled />
         <input type='text' name='name' placeholder='Ride name...' />
         <input type='date' name='rideDate' placeholder='Ride date...' /><br>
-        <input type='text' name='description' placeholder='Description...' /><br>
+        <input type='text' name='description' placeholder='Description...' style="width: 98%;"/><br>
         <input type='text' name='bike' placeholder='Bike...' />
         <input type='number' name='distance' placeholder='Distance, e.g. 45.35' />
         <input type='number' name='duration' placeholder='Duration in seconds...' />
         <input type='number' name='calories' placeholder='Calories burned...' /><br>
         <input type='number' name='avgPwr' placeholder='Average power...' />
         <input type='number' name='avgHr' placeholder='Average heartrate...' /><br>
-        <input type='text' name='courseUrl' placeholder='Course URL...' /><br>
-        <input type='text' name='activityUrl' placeholder='Activity URL...' /><br>
-        <input type='text' name='comments' placeholder='Comments...' /><br>
+        <input type='text' name='courseUrl' placeholder='Course URL...' style="width: 98%;"/><br>
+        <input type='text' name='activityUrl' placeholder='Activity URL...' style="width: 98%;"/><br>
+        <input type='text' name='comments' placeholder='Comments...' style="width: 98%;"/><br>
         <input type='number' name='rating' placeholder='Rating: 1 - 5...' /><br>
         <input type='text' name='addressId' placeholder='Address ID' />
         <input type='text' name='address' placeholder='123 The Street' />
@@ -74,6 +67,39 @@
         <input type='submit' name='submit' value='Submit' />
         <button name="rideDelete">Delete Ride</button>
       </form>
+      </td>
+      </tr>
+      </table>
+	</div><hr>	
+  <div>
+  	<h2>Add a Ride...</h2>
+  	<table style="max-width:500px; content: center">
+  	<tr>
+  	<td>
+        <form name='rideAdd' id='rideAdd'>
+        <input type='text' name='name' placeholder='Ride name...' />
+        <input type='date' name='rideDate' placeholder='Ride date...' /><br>
+        <input type='text' name='description' placeholder='Description...' style="width: 98%;"/><br>
+        <input type='text' name='bike' placeholder='Bike...' />
+        <input type='number' name='distance' placeholder='Distance, e.g. 45.35' />
+        <input type='number' name='duration' placeholder='Duration in seconds...' />
+        <input type='number' name='calories' placeholder='Calories burned...' /><br>
+        <input type='number' name='avgPwr' placeholder='Average power...' />
+        <input type='number' name='avgHr' placeholder='Average heartrate...' /><br>
+        <input type='text' name='courseUrl' placeholder='Course URL...' style="width: 98%;"/><br>
+        <input type='text' name='activityUrl' placeholder='Activity URL...' style="width: 98%;"/><br>
+        <input type='text' name='comments' placeholder='Comments...' style="width: 98%;"/><br>
+        <input type='number' name='rating' placeholder='Rating: 1 - 5...' /><br>
+        <input type='text' name='address' placeholder='123 The Street' />
+        <input type='text' name='address2' placeholder='Apt...' /><br>
+        <input type='text' name='city' placeholder='City' />
+        <input type='text' name='state' placeholder='State' />
+        <input type='text' name='zipcode' placeholder='Zipcode' /><br><br>
+        <input type='submit' name='submit' value='Submit' /><br><hr>
+      </form>
+      </td>
+      </tr>
+      </table>
 	</div>
 </body>
 </html>
