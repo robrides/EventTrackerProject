@@ -169,7 +169,7 @@ window.addEventListener('load', function(e) {
 				let dataDiv = document.getElementById('rideData');
 				dataDiv.textContent = 'Ride ' + rideId + ' deleted';
 				getAllRides();
-				document.getElementByTagName('rideEdit').reset();
+				document.getElementById('rideEdit').reset();
 				document.getElementById('editRideDiv').textContent = '';
 				
 			};

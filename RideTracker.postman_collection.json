@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "ce96d624-1e24-47a8-adee-8fc7b92c40fb",
+		"name": "RideTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Ride by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Rides",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Ride",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Ride",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Ride - live site",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ride",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ride - live site",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Rides - live site",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://54.214.129.164:8080/RideTrackerREST/api/rides",
+					"protocol": "http",
+					"host": [
+						"54",
+						"214",
+						"129",
+						"164"
+					],
+					"port": "8080",
+					"path": [
+						"RideTrackerREST",
+						"api",
+						"rides"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ride by Id - live site",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Ride - live site",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

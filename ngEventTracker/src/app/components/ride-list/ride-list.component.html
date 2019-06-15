@@ -1,0 +1,27 @@
+<h1>Welcome to Ride Tracker!</h1>
+
+  <h2 style="text-align: center">Rides...</h2>
+  <p>Click a ride to edit.</p>
+  <div id='rideList' *ngIf='! selected'>
+    <table class="table table-striped">
+      <thead>
+        <tr style="text-align: center">
+          <th>Task</th>
+          <th>Mark</th>
+          <th >Completed</th>
+          <th >Complete Date</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor='let ride of rides'>
+        <td (click)='displayRide(ride)' id="complete" style="cursor: pointer" >{{ride.name}}</td>
+        <td >{{ride.rideDate}}</td>
+        <td >{{ride.distance}}</td>
+        <td >{{ride.duration}}</td>
+        <td >{{ride.rating}}</td>
+        <td ><button (click)="destroy(ride.id)" class="btn btn-danger" style="display: block; margin: auto">X</button></td>
+      </tr>
+    </tbody>
+    </table>
+  </div><hr>

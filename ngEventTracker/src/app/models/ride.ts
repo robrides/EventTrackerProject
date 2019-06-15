@@ -1,0 +1,55 @@
+import { Address } from './address';
+
+export class Ride {
+
+id: number;
+name: string;
+rideDate: Date;
+description: string;
+bike: string;
+distance: number;
+duration: string;
+calories: number;
+avgPwr: number;
+avgHr: number;
+courseUrl: string;
+activityUrl: string;
+comments: string;
+rating: number;
+address: Address;
+
+  constructor(
+    id?: number,
+    name?: string,
+    rideDate?: Date,
+    description?: string,
+    bike?: string,
+    distance?: number,
+    duration?: string,
+    calories?: number,
+    avgPwr?: number,
+    avgHr?: number,
+    courseUrl?: string,
+    activityUrl?: string,
+    comments?: string,
+    rating?: number,
+    address?: Address
+  ) {
+    this.id = id;
+    this.name = name;
+    this.rideDate = rideDate;
+    this.description = description;
+    this.bike = bike;
+    this.distance = distance;
+    this.duration = duration;
+    this.calories = calories;
+    this.avgPwr = avgPwr;
+    this.avgHr = avgHr;
+    this.courseUrl = courseUrl;
+    this.activityUrl = activityUrl;
+    this.comments = comments;
+    this.rating = rating;
+    this.address = address;
+  }
+}
+
