@@ -4,7 +4,7 @@ export class Ride {
 
 id: number;
 name: string;
-rideDate: Date;
+rideDate: string;
 description: string;
 bike: string;
 distance: number;
@@ -19,9 +19,8 @@ rating: number;
 address: Address;
 
   constructor(
-    id?: number,
     name?: string,
-    rideDate?: Date,
+    rideDate?: string,
     description?: string,
     bike?: string,
     distance?: number,
@@ -35,7 +34,6 @@ address: Address;
     rating?: number,
     address?: Address
   ) {
-    this.id = id;
     this.name = name;
     this.rideDate = rideDate;
     this.description = description;

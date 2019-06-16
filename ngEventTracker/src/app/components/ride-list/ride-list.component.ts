@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Ride } from 'src/app/models/ride';
 import { RideService } from 'src/app/services/ride.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Address } from 'src/app/models/address';
 
 @Component({
   selector: 'app-ride-list',
@@ -18,6 +19,7 @@ export class RideListComponent implements OnInit {
   showComplete = false;
   selected = null;
   newRide = new Ride();
+  newAddress = new Address();
   rides: Ride[] = [];
   addRideToggle = null;
   displayToggle = false;
@@ -35,27 +37,56 @@ export class RideListComponent implements OnInit {
     })
   });
 
-  showAddRide() {
-    this.mode = 'add';
+  transformDate(newDay) {
   }
 
-  addRide(form: NgForm) {  // no way data binding
+  showAddRide() {
     this.mode = 'add';
-    console.log(form.value);
+    this.newAddress = new Address('', '', '', '', '');
+    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
+    console.log(this.newRide);
+    return this.newRide;
+  }
 
-    this.newRide = form.value;
+  // addRide(form: NgForm) {  // no way data binding
+  //   this.mode = 'add';
+  //   console.log(form.value);
+
+  //   this.newRide = form.value;
+  //   console.log(this.newRide);
+
+  //   this.rideService.create(this.newRide).subscribe(
+  //     success => {
+  //       this.reloadRides();
+  //       form.reset();
+  //     },
+  //     err => {
+  //       console.error(err);
+  //     }
+  //   );
+  //   this.newRide = new Ride();
+  //   this.reloadRides();
+  // }
+
+  addRide(ride: Ride) {  // no way data binding
+    this.newAddress = new Address('', '', '', '', '');
+    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
+
+    this.mode = 'add';
+    console.log(ride);
+
+    this.newRide = ride;
     console.log(this.newRide);
 
     this.rideService.create(this.newRide).subscribe(
       success => {
         this.reloadRides();
-        form.reset();
+        this.newRide = new Ride();
       },
       err => {
         console.error(err);
       }
     );
-    this.newRide = new Ride();
     this.reloadRides();
   }
 

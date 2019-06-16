@@ -106,7 +106,7 @@
             </tr>
             </table>
       </div>
-        <div *ngIf='mode === "summary"'>
+        <!-- <div *ngIf='mode === "add"'>
           <div class='form-group'>
             <form #rideToAdd='ngForm' (ngSubmit)="addRide(rideToAdd)" class='form' id='rideAdd' name='rideAdd'>
                 <h4 class="card-header text-center font-weight-bold py-3">Add a Ride...</h4>
@@ -129,13 +129,13 @@
                 <td><label for="name">Avg Heart Rate:</label><input class='form-control' type='number' name='avgHr' placeholder='Average heart rate...' ngModel /></td>
                 </tr>
                 <tr>
-                    <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address' placeholder='123 The Street' ngModel /></td>
-                    <td><label for="name">Apt:</label><input class='form-control' type='text' name='address2' placeholder='Apt...' ngModel /></td>
+                    <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address.address' placeholder='123 The Street' ngModel /></td>
+                    <td><label for="name">Apt:</label><input class='form-control' type='text' name='address.address2' placeholder='Apt...' ngModel /></td>
                   </tr>
                   <tr>
-                    <td><label for="name">City:</label><input class='form-control' type='text' name='city' placeholder='City' ngModel /></td>
-                    <td><label for="name">State:</label><input class='form-control' type='text' name='state' placeholder='State' ngModel /></td>
-                    <td><label for="name">Zip:</label><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' ngModel /></td>
+                    <td><label for="name">City:</label><input class='form-control' type='text' name='address.city' placeholder='City' ngModel /></td>
+                    <td><label for="name">State:</label><input class='form-control' type='text' name='address.state' placeholder='State' ngModel /></td>
+                    <td><label for="name">Zip:</label><input class='form-control' type='text' name='address.zipcode' placeholder='Zipcode' ngModel /></td>
                   </tr>
                     <tr><td colspan='3'><label for="name">Description</label><input class='form-control' type='text' name='description' placeholder='Description...' ngModel /></td></tr>
                     <tr><td colspan='3'><label for="name">Comments: </label><input class='form-control' type='text' name='comments' placeholder='Comments...' ngModel /></td></tr>
@@ -151,7 +151,53 @@
                   </table>
                 </form>
               </div>
-        </div>
+          </div> -->
+
+          <div *ngIf='mode === "add"' id="table" class="container">
+              <h4 class="card-header text-center font-weight-bold py-3">{{ newRide.name }}</h4>
+              <form id='newRide' name='newRide'>
+                <div class='form-group'>
+                  <table style="max-width: 600px; display: block; margin: auto">
+                    <tr>
+                      <td><label for="name"> Date: </label><input class='form-control' type='date' name='rideDate' placeholder='Ride date...' [(ngModel)]="newRide.rideDate" /></td>
+                      <td><label for="name"> Rating: </label><input class='form-control' type='number' name='rating' placeholder='Rating: 1 - 5...' [(ngModel)]="newRide.rating" /></td>
+                    </tr>
+                    <tr>
+                    <td colspan='3'><label for="name"> Name: </label><input class='form-control' type='text' name='name' placeholder='Ride name...' [(ngModel)]="newRide.name" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="name">Bike: </label><input class='form-control' type='text' name='bike' placeholder='Bike...' [(ngModel)]="newRide.bike" /></td>
+                    <td><label for="name">Distance: </label><input class='form-control' type='number' name='distance' placeholder='Distance, e.g. 45.35' [(ngModel)]="newRide.distance" /></td>
+                    <td><label for="name">Duration: </label><input class='form-control' type='number' name='duration' placeholder='Duration in seconds...' [(ngModel)]="newRide.duration" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="name">Calories:</label><input class='form-control' type='number' name='calories' placeholder='Calories burned...' [(ngModel)]="newRide.calories" /></td>
+                    <td><label for="name">Avg Power:</label><input class='form-control' type='number' name='avgPwr' placeholder='Average power...' [(ngModel)]="newRide.avgPwr" /></td>
+                    <td><label for="name">Avg Heart Rate:</label><input class='form-control' type='number' name='avgHr' placeholder='Average heart rate...' [(ngModel)]="newRide.avgHr" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address' placeholder='123 The Street' [(ngModel)]="newRide.address.address" /></td>
+                        <td><label for="name">Apt:</label><input class='form-control' type='text' name='address2' placeholder='Apt...' [(ngModel)]="newRide.address.address2" /></td>
+                      <tr>
+                        <td><label for="name">City:</label><input class='form-control' type='text' name='city' placeholder='City' [(ngModel)]="newRide.address.city" /></td>
+                        <td><label for="name">State:</label><input class='form-control' type='text' name='state' placeholder='State' [(ngModel)]="newRide.address.state" /></td>
+                        <td><label for="name">Zip:</label><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' [(ngModel)]="newRide.address.zipcode" /></td>
+                      </tr>
+                        <tr><td colspan='3'><label for="name">Description</label><input class='form-control' type='text' name='description' placeholder='Description...' [(ngModel)]="newRide.description" /></td></tr>
+                        <tr><td colspan='3'><label for="name">Comments: </label><input class='form-control' type='text' name='comments' placeholder='Comments...' [(ngModel)]="newRide.comments" /></td></tr>
+                        <tr><td colspan='3'><label for="name">Course: </label><input class='form-control' type='text' name='courseUrl' placeholder='Course URL...' [(ngModel)]="newRide.courseUrl" /></td></tr>
+                        <tr><td colspan='3'><label for="name">Activity: </label><input class='form-control' type='text' name='activityUrl' placeholder='Activity URL...' [(ngModel)]="newRide.activityUrl" /></td></tr>
+                        <hr>
+                        <div style='display: inline-block'>
+                        <input type='submit' name='submit' value='Save' (click)='addRide(newRide)' class='btn btn-primary' />
+                        <button class='btn btn-warning' (click)='mode = "summary"'>Cancel</button>
+                        </div>
+                      </table>
+                    </div>
+                </form>
+                </div>
+
+
         <div *ngIf='mode === "edit"' id="table" class="container">
           <h4 class="card-header text-center font-weight-bold py-3">{{ editRide.name }}</h4>
           <form id='editRide' name='editRide'>
