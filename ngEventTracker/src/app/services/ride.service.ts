@@ -54,14 +54,14 @@ export class RideService {
         ));
     }
 
-    // update(ride: Ride) {
-    //     return this.http.put<any>(this.url + '/' + ride.id, ride).pipe(
-    //       catchError((err: any) => {
-    //         console.log(err);
-    //         return throwError('Error during update, Ride Service');
-    //       }
-    //       ));
-    // }
+    update(ride: Ride) {
+        return this.http.put<any>(this.url + '/' + ride.id, ride).pipe(
+          catchError((err: any) => {
+            console.log(err);
+            return throwError('Error during update, Ride Service');
+          }
+          ));
+    }
 
     destroy(id: number) {
         return this.http.delete(this.url + '/' + id)

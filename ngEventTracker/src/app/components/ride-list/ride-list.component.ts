@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ride } from 'src/app/models/ride';
 import { RideService } from 'src/app/services/ride.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-ride-list',
@@ -12,15 +13,38 @@ import { RideService } from 'src/app/services/ride.service';
 })
 export class RideListComponent implements OnInit {
 
+  mode = 'summary';
   editRide: Ride = null;
   showComplete = false;
   selected = null;
   newRide = new Ride();
   rides: Ride[] = [];
+  addRideToggle = null;
+  displayToggle = false;
 
   title = 'Ride Tracker';
 
+  profileForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    address: new FormGroup({
+      street: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl(''),
+      zip: new FormControl('')
+    })
+  });
+
+  toggleAddRide() {
+    this.addRideToggle ? this.addRideToggle = false : this.addRideToggle = true;
+  }
+
+  showAddRide() {
+    this.mode = 'add';
+  }
+
   addRide(form: NgForm) {  // no way data binding
+    this.mode = 'add';
     this.newRide = form.value;
     this.rideService.create(this.newRide).subscribe(
       success => {
@@ -35,33 +59,45 @@ export class RideListComponent implements OnInit {
     this.reloadRides();
   }
 
-  setEditRide() {
-    this.editRide = Object.assign({}, this.selected);
+  setEditRide(ride: Ride) {
+    console.log(ride);
+    this.editRide = ride;
+    this.mode = 'edit';
   }
 
   cancelEdit() {
     this.editRide = null;
   }
 
-  // updateRide(ride: Ride) {  // Two way data binding
-  //   this.rideService.update(ride).subscribe(
-  //     success => {
-  //       this.reloadRides();
-  //       this.editRide = null;
-  //       this.selected = null;
-  //     },
-  //     err => {
-  //       console.error(err);
-  //     }
-  //   );
-  //   }
+  updateRide(ride: Ride) {  // Two way data binding
+    this.rideService.update(ride).subscribe(
+      success => {
+        this.reloadRides();
+        this.editRide = null;
+        this.selected = null;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+    }
 
   displayRide(ride: Ride): void {
+    console.log(ride.id);
+
     this.selected = ride;
+    this.mode = 'details';
+    console.log(this.mode);
+    console.log(ride);
+    console.log(this.selected.name);
+
   }
 
   displayTable() {
+    console.log(this.selected.name);
     this.selected = null;
+    this.mode = 'summary';
+    this.ngOnInit();
   }
 
   destroy(id: number): void {
@@ -89,28 +125,11 @@ export class RideListComponent implements OnInit {
         console.error('Observer got an error: ' + err);
       }
     );
+    this.mode = 'summary';
   }
 
   ngOnInit() {
-    if (!this.selected && this.inboundRoute.snapshot.paramMap.get('id')) {
-      this.rideService.show(this.inboundRoute.snapshot.paramMap.get('id')).subscribe(
-        data => {
-          if (data) {
-            console.log(data);
-            this.displayRide(data);
-            this.reloadRides();
-          } else {
-            this.outboundRouter.navigateByUrl('notfound');
-          }
-        },
-        err => {
-          console.error('Observer got an error: ' + err);
-        }
-      );
-      console.log(this.inboundRoute.snapshot.paramMap.get('id'));
-    } else {
       this.reloadRides();
-    }
   }
 
 }
