@@ -14,6 +14,8 @@ import { Address } from 'src/app/models/address';
 })
 export class RideListComponent implements OnInit {
 
+  totalAvgPwr = 0;
+  totalMiles = 0;
   mode = 'summary';
   editRide: Ride = null;
   showComplete = false;
@@ -23,6 +25,7 @@ export class RideListComponent implements OnInit {
   rides: Ride[] = [];
   addRideToggle = null;
   displayToggle = false;
+  searchResults: Ride[] = [];
 
   title = 'Ride Tracker';
 
@@ -40,36 +43,32 @@ export class RideListComponent implements OnInit {
   transformDate(newDay) {
   }
 
+  showSearch() {
+    this.mode = 'search';
+  }
   showAddRide() {
     this.mode = 'add';
-    // this.newAddress = new Address('', '', '', '', '');
-    // this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
-    // return this.newRide;
   }
 
-  // addRide(form: NgForm) {  // no way data binding
-  //   this.mode = 'add';
-  //   console.log(form.value);
-
-  //   this.newRide = form.value;
-  //   console.log(this.newRide);
-
-  //   this.rideService.create(this.newRide).subscribe(
-  //     success => {
-  //       this.reloadRides();
-  //       form.reset();
-  //     },
-  //     err => {
-  //       console.error(err);
-  //     }
-  //   );
-  //   this.newRide = new Ride();
-  //   this.reloadRides();
-  // }
+  search(form: NgForm) {
+    // for (const ride of this.rides) {
+    //   if (ride.name === form.value.keyword) {
+    //     this.searchResults.push(ride);
+    //   }
+    // }
+    // console.log('Before filter');
+    // this.rides.filter(form.value.keyword);
+    // console.log(this.searchResults);
+    this.mode = 'searchResults';
+    // this.reloadRides();
+  }
 
   addRide(form: NgForm) {  // no way data binding
+    let seconds: number = form.value.hours * 3600;
+    seconds += form.value.minutes * 60;
+    console.log(seconds);
     this.newAddress = new Address('', '', '', '', '');
-    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
+    this.newRide = new Ride ('', '', '', '', 0, 0, 0, 0, 0, '', '', '', 1, this.newAddress);
     this.newAddress.address = form.value.address;
     this.newAddress.address2 = form.value.address2;
     this.newAddress.city = form.value.city;
@@ -79,7 +78,7 @@ export class RideListComponent implements OnInit {
     this.newRide.name = form.value.name;
     this.newRide.rideDate = form.value.rideDate;
     this.newRide.rating = form.value.rating;
-    this.newRide.duration = form.value.duration;
+    this.newRide.duration = seconds;
     this.newRide.distance = form.value.distance;
     this.newRide.bike = form.value.bike;
     this.newRide.avgPwr = form.value.avgPwr;
@@ -92,6 +91,7 @@ export class RideListComponent implements OnInit {
     this.rideService.create(this.newRide).subscribe(
       success => {
         this.reloadRides();
+        this.mode = 'summary';
         this.newRide = new Ride();
       },
       err => {
@@ -99,6 +99,7 @@ export class RideListComponent implements OnInit {
       }
     );
     this.reloadRides();
+    this.mode = 'summary';
   }
 
   setEditRide(ride: Ride) {
@@ -117,6 +118,7 @@ export class RideListComponent implements OnInit {
         this.reloadRides();
         this.editRide = null;
         this.selected = null;
+        this.mode = 'summary';
       },
       err => {
         console.error(err);
@@ -146,32 +148,56 @@ export class RideListComponent implements OnInit {
     this.rideService.destroy(id).subscribe(
       success => {
         this.reloadRides();
+        this.mode = 'summary';
       },
       err => {
         console.error(err);
       }
     );
     this.reloadRides();
+    this.mode = 'summary';
   }
 
   constructor(private rideService: RideService, private datePipe: DatePipe,
               private inboundRoute: ActivatedRoute,
               private outboundRouter: Router) { }
 
+   secondsToHHmmss(totalSeconds) {
+    let hours   = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+    let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+    // round seconds
+    seconds = Math.round(seconds * 100) / 100;
+    let result = (hours < 10 ? '0' + hours : hours);
+    result += ':' + (minutes < 10 ? '0' + minutes : minutes);
+    result += ':' + (seconds  < 10 ? '0' + seconds : seconds);
+    return result;
+  }
+
   reloadRides(): void {
+    this.totalMiles = 0;
+    this.totalAvgPwr = 0;
     this.rideService.index().subscribe(
       data => {
         this.rides = data;
+        let count = 0;
+        for (const ride of this.rides) {
+          this.totalMiles += ride.distance;
+          this.totalAvgPwr += ride.avgPwr;
+          count += 1;
+          ride.duration = this.secondsToHHmmss(ride.duration);
+        }
+        this.totalAvgPwr = this.totalAvgPwr / count;
       },
       err => {
         console.error('Observer got an error: ' + err);
       }
     );
-    this.mode = 'summary';
   }
 
   ngOnInit() {
       this.reloadRides();
+      this.mode = 'summary';
   }
 
 }

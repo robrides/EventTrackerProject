@@ -10,6 +10,19 @@
 
 }
 
+#backgroundImg {
+  background-image: url(/assets/mtnview.jpg);
+  background-repeat: no-repeat;
+  background-position: relative;
+  background-attachment: fixed;
+}
+
+#statsTile {
+  background-color: lightgray;
+  color: black;
+  opacity:0.3;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -36,6 +49,19 @@
   font-feature-settings: 'liga';
 }
 
+#view:hover {
+  color: blue;
+}
+#edit:hover {
+  color: orange;
+}
+#delete:hover {
+  color: red;
+}
+#search:hover {
+  color: lightslategray;
+}
+
 .center {
   display: block;
   margin: auto;
@@ -44,4 +70,8 @@
 
 .spanRideSummary {
   column-span: 10;
+}
+
+#rowHighlight:hover {
+  background-color: rgb(243, 241, 241);
 }

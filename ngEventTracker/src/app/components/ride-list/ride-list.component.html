@@ -2,23 +2,46 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <div class="card">
   <div>
-        <h2 class="card-header text-center font-weight-bold py-3">Ride Tracker</h2>
-      </div>
-      <div>
-      </div>
-      <div class="card-body">
-        <div class='col-lg-12'>
-          <!-- <i id='add' class="float-center text-success material-icons" (click)="showAddRide()" ngbTooltip="Add">add</i> -->
-          <span style='text-align: center' *ngIf='mode === "summary"'><h4>Rides</h4>
-          <button class='btn btn-outline-success' style='display: block; margin: auto' (click)='showAddRide()' >Add a Ride...</button>
-          </span>
+      <div *ngIf='mode === "summary" || mode ==="search"'>
+      <div id="backgroundImg">
+        <div>
+          <h2 class="card-header text-center font-weight-bold py-3"><em>Ride Tracker</em></h2>
         </div>
+        <div style='padding: 30px 0px 0px 30px'>
+        <div class="card" style="width: 18rem">
+            <div class="card-body bg-light">
+              <h5 class="card-title text-center">Stats</h5>
+              <p class="card-text"><b>Miles ridden:</b> {{ totalMiles | number : '3.0-2' }}<br>
+                <b>Average power:</b> {{ totalAvgPwr | number : '3.0-2' }} watts</p>
+              <button class="btn btn-outline-success btn-sm center" (click)='showAddRide()'>Add a Ride...</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div><h4 class='text-center'>Rides
+        <i class="material-icons float-center" id="search" (click)="showSearch()" ngbTooltip="Search">search</i></h4>
+    </div>
+  </div>
+  <div *ngIf='mode === "search"' id="table" class="container">
+      <div class='card-body'>
+        <div class='form-group center col-3'>
+      <form #keyword='ngForm' id='editRide' name='editRide'>
+        <input class='form-control' type='text' name='search' placeholder='Keyword...' ngModel />
+        <div style='padding: 10px 0px 0px 0px'>
+        <button type='button' class='btn btn-outline-secondary btn-sm' (click)='search(keyword)'>Search</button>
+        <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
+      </div>
+        </form>
+
+        </div>
+        </div>
+  </div>
       <div id="table" class="table-editable table-striped">
-        <table class="table table-striped" *ngIf='mode === "summary"'>
+        <table class="table table-striped" *ngIf='mode === "summary" || mode === "search"'>
               <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
-          <tr *ngFor="let ride of rides">
+          <tr *ngFor="let ride of rides" id='rowHighlight'>
             <td>
-            <i class="material-icons" (click)="displayRide(ride)" ngbTooltip="Details">visibility</i>
+            <i class="material-icons" id="view" (click)="displayRide(ride)" ngbTooltip="Details">visibility</i>
           </td>
           <td>
             <span contenteditable="False" style="text-align: center"><b>{{ride.name}}</b><br></span><span style="text-align: center">{{ ride.address.city}}, {{ ride.address.state}}</span>
@@ -30,7 +53,7 @@
             <span contenteditable="true">{{ride.distance}} mi</span>
           </td>
           <td>
-            <span contenteditable="true">{{ride.duration| date:'H:mm:ss':'UTC'}}</span>
+            <span contenteditable="true">{{ride.duration}}</span>
           </td>
           <td>
             <span contenteditable="true">{{ride.avgHr}} pwr</span>
@@ -42,19 +65,22 @@
             <span contenteditable="true">{{ride.bike}}</span>
           </td>
           <td>
-            <span contenteditable="true">{{ride.rating}}</span>
+            <span><ngb-rating [rate]="ride.rating" max="5"></ngb-rating></span>
           </td>
           <td (click)='setEditRide(ride)'>
-            <span><i class="material-icons" ngbTooltip="Edit">edit</i>
+            <span><i class="material-icons" id="edit" ngbTooltip="Edit">edit</i>
           </span>
           <td>
             <span class="table-remove">
-              <i class="material-icons" (click)="destroy(ride.id)" ngbTooltip="Delete">delete</i>
+              <i class="material-icons" id="delete" (click)="destroy(ride.id)" ngbTooltip="Delete">delete</i>
             </span>
           </td>
         </tr>
       </table>
+      </div>
       <div id="table"  *ngIf='mode === "details"'>
+          <h4 class="card-header text-center font-weight-bold py-3">Ride Details</h4>
+          <div class='card-body'>
           <table class="table table-striped">
                 <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
             <tr>
@@ -101,110 +127,71 @@
               <span style="text-align: left"><b>Comments: </b>{{ selected.comments }}<br></span>
               <span style="text-align: left"><b>Start Location: </b>{{ selected.address.address }} {{ selected.address.address2 }},
                 {{ selected.address.city }}, {{ selected.address.state }} {{ selected.address.zipcode }}</span><br>
-                <span><a href="{{ selected.activityUrl }}">Activity</a> | <a href="{{ selected.courseUrl }}"> Course</a><br></span>
+                <span><a href="{{ selected.activityUrl }}" target='_blank' >Activity</a> | <a href="{{ selected.courseUrl }}" target='_blank'> Course</a><br></span>
             </td>
             </tr>
             </table>
       </div>
+      </div>
         <div *ngIf='mode === "add"'>
+          <h4 class="card-header text-center font-weight-bold py-3">Add a Ride...</h4>
+          <div class='card-body'>
           <div class='form-group'>
             <form #rideToAdd='ngForm' (ngSubmit)="addRide(rideToAdd)" class='form' id='rideAdd' name='rideAdd'>
-                <h4 class="card-header text-center font-weight-bold py-3">Add a Ride...</h4>
+
               <table style="max-width: 600px; display: block; margin: auto">
                 <tr>
-                  <td><label for="name"> Date: </label><input class='form-control' type='date' name='rideDate' placeholder='Ride date...' ngModel /></td>
-                  <td><label for="name"> Rating: </label><input class='form-control' type='number' name='rating' placeholder='Rating: 1 - 5...' ngModel /></td>
+                  <td><input class='form-control' type='date' name='rideDate' placeholder='Ride date...' ngModel /></td>
+                  <td colspan='2'><input class='form-control' type='number' name='rating' placeholder='Rating: 1 - 5...' ngModel /></td>
                 </tr>
                 <tr>
-                <td colspan='3'><label for="name"> Name: </label><input class='form-control' type='text' name='name' placeholder='Ride name...' ngModel /></td>
+                <td colspan='3'><input class='form-control' type='text' name='name' placeholder='Ride name...' ngModel /></td>
               </tr>
               <tr>
-                <td><label for="name">Bike: </label><input class='form-control' type='text' name='bike' placeholder='Bike...' ngModel /></td>
-                <td><label for="name">Distance: </label><input class='form-control' type='number' name='distance' placeholder='Distance, e.g. 45.35' ngModel /></td>
-                <td><label for="name">Duration: </label><input class='form-control' type='number' name='duration' placeholder='Seconds...' ngModel /></td>
+                <td><input class='form-control' type='text' name='bike' placeholder='Bike...' ngModel /></td>
+                <td><input class='form-control' type='number' name='distance' placeholder='Distance...' ngModel /></td>
+                <td><input class='form-control' type="number" id="hours" name="hours" ngModel placeholder="HH..." /></td>
+                <td><input class='form-control' type="number" id="minutes" name="minutes" ngModel placeholder="mm..." required /></td>
               </tr>
               <tr>
-                <td><label for="name">Calories:</label><input class='form-control' type='number' name='calories' placeholder='Calories burned...' ngModel /></td>
-                <td><label for="name">Avg Power:</label><input class='form-control' type='number' name='avgPwr' placeholder='Average power...' ngModel /></td>
-                <td><label for="name">Avg Heart Rate:</label><input class='form-control' type='number' name='avgHr' placeholder='Average heart rate...' ngModel /></td>
+                <td><input class='form-control' type='number' name='calories' placeholder='Calories burned...' ngModel /></td>
+                <td><input class='form-control' type='number' name='avgPwr' placeholder='Avg power...' ngModel /></td>
+                <td colspan='2'><input class='form-control' type='number' name='avgHr' placeholder='Avg heart rate...' ngModel /></td>
                 </tr>
                 <tr>
-                    <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address' placeholder='123 The Street' ngModel /></td>
-                    <td><label for="name">Apt:</label><input class='form-control' type='text' name='address2' placeholder='Apt...' ngModel /></td>
+                    <td colspan='2'><input class='form-control' type='text' name='address' placeholder='123 The Street' ngModel /></td>
+                    <td colsapn='2'><input class='form-control' type='text' name='address2' placeholder='Apt, etc.' ngModel /></td>
                   </tr>
                   <tr>
-                    <td><label for="name">City:</label><input class='form-control' type='text' name='city' placeholder='City' ngModel /></td>
-                    <td><label for="name">State:</label><input class='form-control' type='text' name='state' placeholder='State' ngModel /></td>
-                    <td><label for="name">Zip:</label><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' ngModel /></td>
+                    <td><input class='form-control' type='text' name='city' placeholder='City' ngModel /></td>
+                    <td colspan='2'><input class='form-control' type='text' name='state' placeholder='State' ngModel /></td>
+                    <td><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' ngModel /></td>
                   </tr>
-                    <tr><td colspan='3'><label for="name">Description</label><input class='form-control' type='text' name='description' placeholder='Description...' ngModel /></td></tr>
-                    <tr><td colspan='3'><label for="name">Comments: </label><input class='form-control' type='text' name='comments' placeholder='Comments...' ngModel /></td></tr>
-                    <tr><td colspan='3'><label for="name">Course: </label><input class='form-control' type='text' name='courseUrl' placeholder='Course URL...' ngModel /></td></tr>
-                    <tr><td colspan='3'><label for="name">Activity: </label><input class='form-control' type='text' name='activityUrl' placeholder='Activity URL...' ngModel /></td></tr>
+                    <tr><td colspan='4'><input class='form-control' type='textarea' rows='2' name='description' placeholder='Description...' ngModel /></td></tr>
+                    <tr><td colspan='4'><input class='form-control' type='textarea' rows='3' name='comments' placeholder='Comments...' ngModel /></td></tr>
+                    <tr><td colspan='4'><input class='form-control' type='text' name='activityUrl' placeholder='Activity URL...' ngModel /></td></tr>
+                    <tr><td colspan='4'><input class='form-control' type='text' name='courseUrl' placeholder='Course URL...' ngModel /></td></tr>
                     <hr>
-                    <div class='wrapper'>
-                    <div style='display: inline-block'>
-                    <input type='submit' name='submit' value='Save' (click)='addRide(rideToAdd)' class='btn btn-primary' />
-                    <button type='button' class='btn btn-warning' (click)='mode = "summary"'>Cancel</button>
+                    <div class='float-left' style='padding: 0px 0px 10px 0px'>
+                    <input type='submit' name='submit' value='Save' (click)='addRide(rideToAdd)' class='btn btn-outline-primary btn-sm' />
+                    <button type='button' class='btn btn-outline-warning btn-sm' (click)='mode = "summary"'>Cancel</button>
                     </div>
-                  </div>
                   </table>
                 </form>
               </div>
+            </div>
           </div>
-
-          <!-- <div *ngIf='mode === "add"' id="table" class="container">
-              <h4 class="card-header text-center font-weight-bold py-3">{{ newRide.name }}</h4>
-              <form id='newRide' name='newRide'>
-                <div class='form-group'>
-                  <table style="max-width: 600px; display: block; margin: auto">
-                    <tr>
-                      <td><label for="name"> Date: </label><input class='form-control' type='date' name='rideDate' placeholder='Ride date...' [(ngModel)]="newRide.rideDate" /></td>
-                      <td><label for="name"> Rating: </label><input class='form-control' type='number' name='rating' placeholder='Rating: 1 - 5...' [(ngModel)]="newRide.rating" /></td>
-                    </tr>
-                    <tr>
-                    <td colspan='3'><label for="name"> Name: </label><input class='form-control' type='text' name='name' placeholder='Ride name...' [(ngModel)]="newRide.name" /></td>
-                  </tr>
-                  <tr>
-                    <td><label for="name">Bike: </label><input class='form-control' type='text' name='bike' placeholder='Bike...' [(ngModel)]="newRide.bike" /></td>
-                    <td><label for="name">Distance: </label><input class='form-control' type='number' name='distance' placeholder='Distance, e.g. 45.35' [(ngModel)]="newRide.distance" /></td>
-                    <td><label for="name">Duration: </label><input class='form-control' type='number' name='duration' placeholder='Duration in seconds...' [(ngModel)]="newRide.duration" /></td>
-                  </tr>
-                  <tr>
-                    <td><label for="name">Calories:</label><input class='form-control' type='number' name='calories' placeholder='Calories burned...' [(ngModel)]="newRide.calories" /></td>
-                    <td><label for="name">Avg Power:</label><input class='form-control' type='number' name='avgPwr' placeholder='Average power...' [(ngModel)]="newRide.avgPwr" /></td>
-                    <td><label for="name">Avg Heart Rate:</label><input class='form-control' type='number' name='avgHr' placeholder='Average heart rate...' [(ngModel)]="newRide.avgHr" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address' placeholder='123 The Street' [(ngModel)]="newRide.address.address" /></td>
-                        <td><label for="name">Apt:</label><input class='form-control' type='text' name='address2' placeholder='Apt...' [(ngModel)]="newRide.address.address2" /></td>
-                      <tr>
-                        <td><label for="name">City:</label><input class='form-control' type='text' name='city' placeholder='City' [(ngModel)]="newRide.address.city" /></td>
-                        <td><label for="name">State:</label><input class='form-control' type='text' name='state' placeholder='State' [(ngModel)]="newRide.address.state" /></td>
-                        <td><label for="name">Zip:</label><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' [(ngModel)]="newRide.address.zipcode" /></td>
-                      </tr>
-                        <tr><td colspan='3'><label for="name">Description</label><input class='form-control' type='text' name='description' placeholder='Description...' [(ngModel)]="newRide.description" /></td></tr>
-                        <tr><td colspan='3'><label for="name">Comments: </label><input class='form-control' type='text' name='comments' placeholder='Comments...' [(ngModel)]="newRide.comments" /></td></tr>
-                        <tr><td colspan='3'><label for="name">Course: </label><input class='form-control' type='text' name='courseUrl' placeholder='Course URL...' [(ngModel)]="newRide.courseUrl" /></td></tr>
-                        <tr><td colspan='3'><label for="name">Activity: </label><input class='form-control' type='text' name='activityUrl' placeholder='Activity URL...' [(ngModel)]="newRide.activityUrl" /></td></tr>
-                        <hr>
-                        <div style='display: inline-block'>
-                        <input type='submit' name='submit' value='Save' (click)='addRide(newRide)' class='btn btn-primary' />
-                        <button class='btn btn-warning' (click)='mode = "summary"'>Cancel</button>
-                        </div>
-                      </table>
-                    </div>
-                </form>
-                </div> -->
-
-
         <div *ngIf='mode === "edit"' id="table" class="container">
           <h4 class="card-header text-center font-weight-bold py-3">{{ editRide.name }}</h4>
-          <form id='editRide' name='editRide'>
+          <div style='padding: 0px 0px 30px 0px'>
+          <div class='card-body'>
             <div class='form-group'>
+          <form id='editRide' name='editRide'>
               <table style="max-width: 600px; display: block; margin: auto">
                 <tr>
-                  <td><label for="name"> Id: </label><input class='form-control' type='number' name='rideid' [(ngModel)]="editRide.id" /></td>
+                  <td colspan='4' class='text-center'><h4>Id: {{editRide.id}}</h4></td>
+                </tr>
+                <tr>
                   <td><label for="name"> Date: </label><input class='form-control' type='date' name='rideDate' placeholder='Ride date...' [(ngModel)]="editRide.rideDate" /></td>
                   <td><label for="name"> Rating: </label><input class='form-control' type='number' name='rating' placeholder='Rating: 1 - 5...' [(ngModel)]="editRide.rating" /></td>
                 </tr>
@@ -234,16 +221,80 @@
                     <tr><td colspan='3'><label for="name">Course: </label><input class='form-control' type='text' name='courseUrl' placeholder='Course URL...' [(ngModel)]="editRide.courseUrl" /></td></tr>
                     <tr><td colspan='3'><label for="name">Activity: </label><input class='form-control' type='text' name='activityUrl' placeholder='Activity URL...' [(ngModel)]="editRide.activityUrl" /></td></tr>
                     <hr>
-                    <div style='display: inline-block'>
-                    <input type='submit' name='submit' value='Save' (click)='updateRide(editRide)' class='btn btn-primary' />
-                    <button name="rideDelete" (click)='destroy(editRide.id)'class='btn btn-danger'>Delete Ride</button>
-                    <button class='btn btn-warning' (click)='mode = "summary"'>Cancel</button>
+                    <div class='center'>
+                    <input type='submit' name='submit' value='Save' (click)='updateRide(editRide)' class='btn btn-outline-primary float-left btn-sm' />
+                    <button class='btn btn-outline-warning float-left btn-sm' (click)='mode = "summary"'>Cancel</button>
+                    <button name="rideDelete" (click)='destroy(editRide.id)'class='btn btn-outline-danger float-right btn-sm'>Delete Ride</button>
                     </div>
                   </table>
-                </div>
-            </form>
-            </div>
+                </form>
+              </div>
           </div>
+        </div>
+            </div>
 
-      </div>
+
+
+            <div *ngIf='mode === "searchResults"' class='container'>
+                <div class='card-body'>
+                <div><h4 class='text-center'>Search Results
+                  <i class="material-icons float-center" id="search" (click)="showSearch()" ngbTooltip="Search">search</i></h4>
+              </div>
+            </div>
+            <div id="table" class="container">
+                <div class='card-body'>
+                  <div class='form-group center col-3'>
+                <form #keywordForm='ngForm' id='editRide' name='editRide'>
+                  <input class='form-control' type='text' name='search' placeholder='Keyword...' ngModel />
+                  <div style='padding: 10px 0px 0px 0px'>
+                  <button type='button' class='btn btn-outline-secondary btn-sm' (click)='search(keywordForm)'>Search</button>
+                  <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
+                </div>
+                  </form>
+                  </div>
+                  </div>
+            </div>
+                <div id="table" class="table-editable table-striped">
+                  <table class="table table-striped" *ngIf='mode === "summary" || mode === "search"'>
+                        <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
+                    <tr *ngFor="let ride of searchResults" id='rowHighlight'>
+                      <td>
+                      <i class="material-icons" id="view" (click)="displayRide(ride)" ngbTooltip="Details">visibility</i>
+                    </td>
+                    <td>
+                      <span contenteditable="False" style="text-align: center"><b>{{ride.name}}</b><br></span><span style="text-align: center">{{ ride.address.city}}, {{ ride.address.state}}</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.rideDate}}</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.distance}} mi</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.duration}}</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.avgHr}} pwr</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.avgPwr}} hr</span>
+                    </td>
+                    <td>
+                      <span contenteditable="true">{{ride.bike}}</span>
+                    </td>
+                    <td>
+                      <span><ngb-rating [rate]="ride.rating" max="5"></ngb-rating></span>
+                    </td>
+                    <td (click)='setEditRide(ride)'>
+                      <span><i class="material-icons" id="edit" ngbTooltip="Edit">edit</i>
+                    </span>
+                    <td>
+                      <span class="table-remove">
+                        <i class="material-icons" id="delete" (click)="destroy(ride.id)" ngbTooltip="Delete">delete</i>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+                </div>
+          </div>
     </div>
