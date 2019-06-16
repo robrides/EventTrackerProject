@@ -35,17 +35,17 @@ export class RideListComponent implements OnInit {
     })
   });
 
-  toggleAddRide() {
-    this.addRideToggle ? this.addRideToggle = false : this.addRideToggle = true;
-  }
-
   showAddRide() {
     this.mode = 'add';
   }
 
   addRide(form: NgForm) {  // no way data binding
     this.mode = 'add';
+    console.log(form.value);
+
     this.newRide = form.value;
+    console.log(this.newRide);
+
     this.rideService.create(this.newRide).subscribe(
       success => {
         this.reloadRides();

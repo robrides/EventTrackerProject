@@ -110,6 +110,8 @@ window.addEventListener('load', function(e) {
 	};
 	
 	function addRide(rideObj) {
+		console.log(JSON.stringify(rideObj));
+		
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'api/rides/', true);
 		xhr.setRequestHeader("Content-type", "application/json");

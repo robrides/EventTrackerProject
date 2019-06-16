@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -45,13 +45,15 @@ export class RideService {
     }
 
     create(ride: Ride) {
-        return this.http.post<Ride>(this.url, ride)
-        .pipe(
-          catchError((err: any) => {
-            console.log(err);
-            return throwError('KABOOM');
-          }
-        ));
+      console.log('Ride being sent*******');
+      console.log(ride);
+      return this.http.post<Ride>(this.url, ride)
+      .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('KABOOM');
+        }
+      ));
     }
 
     update(ride: Ride) {
