@@ -106,7 +106,7 @@
             </tr>
             </table>
       </div>
-        <!-- <div *ngIf='mode === "add"'>
+        <div *ngIf='mode === "add"'>
           <div class='form-group'>
             <form #rideToAdd='ngForm' (ngSubmit)="addRide(rideToAdd)" class='form' id='rideAdd' name='rideAdd'>
                 <h4 class="card-header text-center font-weight-bold py-3">Add a Ride...</h4>
@@ -129,13 +129,13 @@
                 <td><label for="name">Avg Heart Rate:</label><input class='form-control' type='number' name='avgHr' placeholder='Average heart rate...' ngModel /></td>
                 </tr>
                 <tr>
-                    <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address.address' placeholder='123 The Street' ngModel /></td>
-                    <td><label for="name">Apt:</label><input class='form-control' type='text' name='address.address2' placeholder='Apt...' ngModel /></td>
+                    <td colspan='2'><label for="name">Address:</label><input class='form-control' type='text' name='address' placeholder='123 The Street' ngModel /></td>
+                    <td><label for="name">Apt:</label><input class='form-control' type='text' name='address2' placeholder='Apt...' ngModel /></td>
                   </tr>
                   <tr>
-                    <td><label for="name">City:</label><input class='form-control' type='text' name='address.city' placeholder='City' ngModel /></td>
-                    <td><label for="name">State:</label><input class='form-control' type='text' name='address.state' placeholder='State' ngModel /></td>
-                    <td><label for="name">Zip:</label><input class='form-control' type='text' name='address.zipcode' placeholder='Zipcode' ngModel /></td>
+                    <td><label for="name">City:</label><input class='form-control' type='text' name='city' placeholder='City' ngModel /></td>
+                    <td><label for="name">State:</label><input class='form-control' type='text' name='state' placeholder='State' ngModel /></td>
+                    <td><label for="name">Zip:</label><input class='form-control' type='text' name='zipcode' placeholder='Zipcode' ngModel /></td>
                   </tr>
                     <tr><td colspan='3'><label for="name">Description</label><input class='form-control' type='text' name='description' placeholder='Description...' ngModel /></td></tr>
                     <tr><td colspan='3'><label for="name">Comments: </label><input class='form-control' type='text' name='comments' placeholder='Comments...' ngModel /></td></tr>
@@ -151,9 +151,9 @@
                   </table>
                 </form>
               </div>
-          </div> -->
+          </div>
 
-          <div *ngIf='mode === "add"' id="table" class="container">
+          <!-- <div *ngIf='mode === "add"' id="table" class="container">
               <h4 class="card-header text-center font-weight-bold py-3">{{ newRide.name }}</h4>
               <form id='newRide' name='newRide'>
                 <div class='form-group'>
@@ -195,7 +195,7 @@
                       </table>
                     </div>
                 </form>
-                </div>
+                </div> -->
 
 
         <div *ngIf='mode === "edit"' id="table" class="container">

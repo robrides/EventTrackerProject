@@ -42,10 +42,9 @@ export class RideListComponent implements OnInit {
 
   showAddRide() {
     this.mode = 'add';
-    this.newAddress = new Address('', '', '', '', '');
-    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
-    console.log(this.newRide);
-    return this.newRide;
+    // this.newAddress = new Address('', '', '', '', '');
+    // this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
+    // return this.newRide;
   }
 
   // addRide(form: NgForm) {  // no way data binding
@@ -68,16 +67,28 @@ export class RideListComponent implements OnInit {
   //   this.reloadRides();
   // }
 
-  addRide(ride: Ride) {  // no way data binding
+  addRide(form: NgForm) {  // no way data binding
     this.newAddress = new Address('', '', '', '', '');
     this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
-
-    this.mode = 'add';
-    console.log(ride);
-
-    this.newRide = ride;
+    this.newAddress.address = form.value.address;
+    this.newAddress.address2 = form.value.address2;
+    this.newAddress.city = form.value.city;
+    this.newAddress.state = form.value.state;
+    this.newAddress.zipcode = form.value.zip;
+    this.newRide.address = this.newAddress;
+    this.newRide.name = form.value.name;
+    this.newRide.rideDate = form.value.rideDate;
+    this.newRide.rating = form.value.rating;
+    this.newRide.duration = form.value.duration;
+    this.newRide.distance = form.value.distance;
+    this.newRide.bike = form.value.bike;
+    this.newRide.avgPwr = form.value.avgPwr;
+    this.newRide.avgHr = form.value.avgHr;
+    this.newRide.description = form.value.description;
+    this.newRide.comments = form.value.comments;
+    this.newRide.courseUrl = form.value.courseUrl;
+    this.newRide.activityUrl = form.value.activityUrl;
     console.log(this.newRide);
-
     this.rideService.create(this.newRide).subscribe(
       success => {
         this.reloadRides();
