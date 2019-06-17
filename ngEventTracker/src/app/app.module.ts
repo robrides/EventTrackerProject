@@ -10,11 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { MatExpansionModule, MatButtonModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RideListComponent
+    RideListComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbRatingModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    FilterPipe
   ],
   bootstrap: [AppComponent]
 })

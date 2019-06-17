@@ -7,39 +7,60 @@
         <div>
           <h2 class="card-header text-center font-weight-bold py-3"><em>Ride Tracker</em></h2>
         </div>
-        <div style='padding: 30px 0px 0px 30px'>
+        <div style='padding: 30px 0px 30px 30px'>
         <div class="card" style="width: 18rem">
             <div class="card-body bg-light">
               <h5 class="card-title text-center">Stats</h5>
               <p class="card-text"><b>Miles ridden:</b> {{ totalMiles | number : '3.0-2' }}<br>
                 <b>Average power:</b> {{ totalAvgPwr | number : '3.0-2' }} watts</p>
-              <button class="btn btn-outline-success btn-sm center" (click)='showAddRide()'>Add a Ride...</button>
+              <!-- <button class="btn btn-outline-primary btn-sm center" (click)='showAddRide()'>Add a Ride...</button> -->
             </div>
           </div>
         </div>
       </div>
-      <div><h4 class='text-center'>Rides
-        <i class="material-icons float-center" id="search" (click)="showSearch()" ngbTooltip="Search">search</i></h4>
-    </div>
-  </div>
-  <div *ngIf='mode === "search"' id="table" class="container">
-      <div class='card-body'>
-        <div class='form-group center col-3'>
-      <form #keyword='ngForm' id='editRide' name='editRide'>
-        <input class='form-control' type='text' name='search' placeholder='Keyword...' ngModel />
-        <div style='padding: 10px 0px 0px 0px'>
-        <button type='button' class='btn btn-outline-secondary btn-sm' (click)='search(keyword)'>Search</button>
-        <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
+      <div>
+        <h3 class='text-center'>
+          Rides
+          <i class="material-icons float-center" id="addRideIcon" (click)="showAddRide()" ngbTooltip="Add Ride">add_box</i>
+          <i class="material-icons float-center" id="search" (click)="showSearch()" ngbTooltip="Search">search</i>
+        </h3>
       </div>
-        </form>
+    </div>
+    <div *ngIf='mode === "search"' id="table" class="container">
+      <div class='card-body'>
+        <div class='col-6 center'>
+          <form #keywordForm='ngForm' id='editRide' name='editRide' class='form-inline'>
+            <div class='form-group'>
+              <input class='form-control' type='text' name='keyword' placeholder='Keyword...' ngModel />
+            </div>
+            <input type='submit' name='search' value='Search' (click)='search(keywordForm)' class='btn btn-outline-primary btn-sm' />
+            <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="table" class="table-editable table-striped">
+      <table class="table table-striped" *ngIf='mode === "summary" || mode === "search"'>
+        <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
+        <tr>
+          <td></td>
+          <td class='center'>
+            <i class="material-icons float-center" id="sortName" (click)="sort('name')" ngbTooltip="Sort">sort_by_alpha</i>
+          </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class='center'>
+                <i class="material-icons float-center" id="sortBike" (click)="sort('bike')" ngbTooltip="Sort">sort_by_alpha</i>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
 
-        </div>
-        </div>
-  </div>
-      <div id="table" class="table-editable table-striped">
-        <table class="table table-striped" *ngIf='mode === "summary" || mode === "search"'>
-              <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
-          <tr *ngFor="let ride of rides" id='rowHighlight'>
+              <tr *ngFor="let ride of rides" id='rowHighlight'>
             <td>
             <i class="material-icons" id="view" (click)="displayRide(ride)" ngbTooltip="Details">visibility</i>
           </td>
@@ -232,9 +253,6 @@
           </div>
         </div>
             </div>
-
-
-
             <div *ngIf='mode === "searchResults"' class='container'>
                 <div class='card-body'>
                 <div><h4 class='text-center'>Search Results
@@ -243,19 +261,18 @@
             </div>
             <div id="table" class="container">
                 <div class='card-body'>
-                  <div class='form-group center col-3'>
-                <form #keywordForm='ngForm' id='editRide' name='editRide'>
-                  <input class='form-control' type='text' name='search' placeholder='Keyword...' ngModel />
-                  <div style='padding: 10px 0px 0px 0px'>
-                  <button type='button' class='btn btn-outline-secondary btn-sm' (click)='search(keywordForm)'>Search</button>
-                  <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
-                </div>
-                  </form>
+                    <div class='col-6 center'>
+                    <form #keywordForm2='ngForm' id='search2' name='search2' class='form-inline'>
+                    <div class='form-group'>
+                      <input class='form-control' type='text' name='keyword' placeholder='Keyword...' ngModel />
+                    </div>
+                      <input type='submit' name='search' value='Search' (click)='search(keywordForm2)' class='btn btn-outline-primary btn-sm' />
+                      <button type='button' class='btn btn-outline-dark btn-sm' (click)='mode = "summary"'>Back</button>
+                    </form>
+                    </div>
                   </div>
-                  </div>
-            </div>
                 <div id="table" class="table-editable table-striped">
-                  <table class="table table-striped" *ngIf='mode === "summary" || mode === "search"'>
+                  <table class="table table-striped">
                         <!-- <mdb-icon fas icon="plus" size="2x"></mdb-icon> -->
                     <tr *ngFor="let ride of searchResults" id='rowHighlight'>
                       <td>

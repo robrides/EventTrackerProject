@@ -1,3 +1,4 @@
+import { FilterPipe } from './../../pipes/filter.pipe';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -14,6 +15,7 @@ import { Address } from 'src/app/models/address';
 })
 export class RideListComponent implements OnInit {
 
+
   totalAvgPwr = 0;
   totalMiles = 0;
   mode = 'summary';
@@ -26,6 +28,8 @@ export class RideListComponent implements OnInit {
   addRideToggle = null;
   displayToggle = false;
   searchResults: Ride[] = [];
+  nameSort = 0;
+  bikeSort = 0;
 
   title = 'Ride Tracker';
 
@@ -50,17 +54,42 @@ export class RideListComponent implements OnInit {
     this.mode = 'add';
   }
 
-  search(form: NgForm) {
-    // for (const ride of this.rides) {
-    //   if (ride.name === form.value.keyword) {
-    //     this.searchResults.push(ride);
-    //   }
+  sort(by: string) {
+    if (by === 'name') {
+      if (this.nameSort === 0) {
+      this.rides.sort((a, b) => a.name.localeCompare(b.name));
+      this.nameSort = 1;
+      } else {
+        this.rides.sort((b, a) => b.name.localeCompare(a.name));
+        this.nameSort = 0;
+      }
+    }
+    if (by === 'rideDate') {
+    this.rides.sort((a, b) => a.rideDate.localeCompare(b.name));
+    }
+    // if (by === 'distance') {
+    // this.rides.sort((a, b) => a.distance.localeCompare(b.name));
     // }
-    // console.log('Before filter');
-    // this.rides.filter(form.value.keyword);
-    // console.log(this.searchResults);
+    if (by === 'bike') {
+      this.rides.sort((a, b) => a.bike.localeCompare(b.name));
+      this.nameSort = 1;
+      } else {
+        this.rides.sort((b, a) => b.bike.localeCompare(a.name));
+        this.bikeSort = 0;
+      }
+    if (by === 'city') {
+    this.rides.sort((a, b) => a.address.city.localeCompare(b.name));
+    }
+    if (by === 'state') {
+    this.rides.sort((a, b) => a.address.state.localeCompare(b.name));
+    }
+  }
+
+  search(form: NgForm) {
+    this.searchResults = [];
+    this.searchResults = this.filterPipe.transform(this.rides, form.value.keyword);
     this.mode = 'searchResults';
-    // this.reloadRides();
+    form.reset();
   }
 
   addRide(form: NgForm) {  // no way data binding
@@ -68,7 +97,7 @@ export class RideListComponent implements OnInit {
     seconds += form.value.minutes * 60;
     console.log(seconds);
     this.newAddress = new Address('', '', '', '', '');
-    this.newRide = new Ride ('', '', '', '', 0, 0, 0, 0, 0, '', '', '', 1, this.newAddress);
+    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
     this.newAddress.address = form.value.address;
     this.newAddress.address2 = form.value.address2;
     this.newAddress.city = form.value.city;
@@ -93,6 +122,7 @@ export class RideListComponent implements OnInit {
         this.reloadRides();
         this.mode = 'summary';
         this.newRide = new Ride();
+        form.reset();
       },
       err => {
         console.error(err);
@@ -160,7 +190,7 @@ export class RideListComponent implements OnInit {
 
   constructor(private rideService: RideService, private datePipe: DatePipe,
               private inboundRoute: ActivatedRoute,
-              private outboundRouter: Router) { }
+              private outboundRouter: Router, private filterPipe: FilterPipe) { }
 
    secondsToHHmmss(totalSeconds) {
     let hours   = Math.floor(totalSeconds / 3600);

@@ -62,6 +62,18 @@
   color: lightslategray;
 }
 
+#search {
+  vertical-align: middle;
+}
+
+#addRideIcon {
+  vertical-align: middle;
+}
+
+#addRideIcon:hover {
+  color: blue;
+}
+
 .center {
   display: block;
   margin: auto;
