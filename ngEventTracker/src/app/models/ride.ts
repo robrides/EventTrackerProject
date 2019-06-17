@@ -8,7 +8,7 @@ rideDate: string;
 description: string;
 bike: string;
 distance: number;
-duration: string;
+duration: number;
 calories: number;
 avgPwr: number;
 avgHr: number;
@@ -24,7 +24,7 @@ address: Address;
     description?: string,
     bike?: string,
     distance?: number,
-    duration?: string,
+    duration?: number,
     calories?: number,
     avgPwr?: number,
     avgHr?: number,

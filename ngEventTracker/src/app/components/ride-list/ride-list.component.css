@@ -10,13 +10,6 @@
 
 }
 
-#backgroundImg {
-  background-image: url(/assets/mtnview.jpg);
-  background-repeat: no-repeat;
-  background-position: relative;
-  background-attachment: fixed;
-}
-
 #statsTile {
   background-color: lightgray;
   color: black;
@@ -50,10 +43,10 @@
 }
 
 #view:hover {
-  color: blue;
+  color: lightslategray;
 }
 #edit:hover {
-  color: orange;
+  color: lightslategray;
 }
 #delete:hover {
   color: red;
@@ -71,7 +64,7 @@
 }
 
 #addRideIcon:hover {
-  color: blue;
+  color: lightslategray;
 }
 
 .center {

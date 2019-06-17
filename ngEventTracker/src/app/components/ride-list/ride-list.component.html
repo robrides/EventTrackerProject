@@ -2,12 +2,12 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <div class="card">
   <div>
-      <div *ngIf='mode === "summary" || mode ==="search"'>
+      <div >
       <div id="backgroundImg">
         <div>
-          <h2 class="card-header text-center font-weight-bold py-3"><em>Ride Tracker</em></h2>
+          <h2 class="text-center font-weight-bold py-3"><em>Ride Tracker</em></h2>
         </div>
-        <div style='padding: 30px 0px 30px 30px'>
+        <div style='padding: 20px 0px 30px 30px'>
         <div class="card" style="width: 18rem">
             <div class="card-body bg-light">
               <h5 class="card-title text-center">Stats</h5>
@@ -18,10 +18,10 @@
           </div>
         </div>
       </div>
-      <div>
+      <div *ngIf='mode === "summary" || mode === "search" || mode === "searchResults"' >
         <h3 class='text-center'>
           Rides
-          <i class="material-icons float-center" id="addRideIcon" (click)="showAddRide()" ngbTooltip="Add Ride">add_box</i>
+          <i class="material-icons float-center" id="addRideIcon" (click)="showAddRide()" ngbTooltip="Add Ride">add</i>
           <i class="material-icons float-center" id="search" (click)="showSearch()" ngbTooltip="Search">search</i>
         </h3>
       </div>
@@ -53,7 +53,7 @@
             <td></td>
             <td></td>
             <td class='center'>
-                <i class="material-icons float-center" id="sortBike" (click)="sort('bike')" ngbTooltip="Sort">sort_by_alpha</i>
+                <i style='padding: 0px 50px 0px 0px'class="material-icons float-center" id="sortBike" (click)="sort('bike')" ngbTooltip="Sort">sort_by_alpha</i>
             </td>
             <td></td>
             <td></td>

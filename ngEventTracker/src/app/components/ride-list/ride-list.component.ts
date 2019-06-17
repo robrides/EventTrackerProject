@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ride } from 'src/app/models/ride';
 import { RideService } from 'src/app/services/ride.service';
-import { FormGroup, FormControl } from '@angular/forms';
+// import { FormGroup, FormControl } from '@angular/forms';
 import { Address } from 'src/app/models/address';
 
 @Component({
@@ -33,19 +33,19 @@ export class RideListComponent implements OnInit {
 
   title = 'Ride Tracker';
 
-  profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    address: new FormGroup({
-      street: new FormControl(''),
-      city: new FormControl(''),
-      state: new FormControl(''),
-      zip: new FormControl('')
-    })
-  });
+  // profileForm = new FormGroup({
+  //   firstName: new FormControl(''),
+  //   lastName: new FormControl(''),
+  //   address: new FormGroup({
+  //     street: new FormControl(''),
+  //     city: new FormControl(''),
+  //     state: new FormControl(''),
+  //     zip: new FormControl('')
+  //   })
+  // });
 
-  transformDate(newDay) {
-  }
+  // transformDate(newDay) {
+  // }
 
   showSearch() {
     this.mode = 'search';
@@ -97,7 +97,7 @@ export class RideListComponent implements OnInit {
     seconds += form.value.minutes * 60;
     console.log(seconds);
     this.newAddress = new Address('', '', '', '', '');
-    this.newRide = new Ride ('', '', '', '', 0, '', 0, 0, 0, '', '', '', 1, this.newAddress);
+    this.newRide = new Ride ('', '', '', '', 0, 0, 0, 0, 0, '', '', '', 1, this.newAddress);
     this.newAddress.address = form.value.address;
     this.newAddress.address2 = form.value.address2;
     this.newAddress.city = form.value.city;
@@ -196,7 +196,6 @@ export class RideListComponent implements OnInit {
     let hours   = Math.floor(totalSeconds / 3600);
     let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
     let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
-    // round seconds
     seconds = Math.round(seconds * 100) / 100;
     let result = (hours < 10 ? '0' + hours : hours);
     result += ':' + (minutes < 10 ? '0' + minutes : minutes);
@@ -215,7 +214,7 @@ export class RideListComponent implements OnInit {
           this.totalMiles += ride.distance;
           this.totalAvgPwr += ride.avgPwr;
           count += 1;
-          ride.duration = this.secondsToHHmmss(ride.duration);
+          // ride.duration = this.secondsToHHmmss(ride.duration);
         }
         this.totalAvgPwr = this.totalAvgPwr / count;
       },

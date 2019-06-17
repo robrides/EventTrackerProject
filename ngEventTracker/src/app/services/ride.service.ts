@@ -4,6 +4,7 @@ import { Observable, throwError} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Ride } from '../models/ride';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,9 @@ export class RideService {
 
     constructor(private http: HttpClient, private outboundRouter: Router) { }
 
-    private baseUrl = 'http://localhost:8080/';
-    private url = this.baseUrl + 'api/rides';
+    // private baseUrl = 'http://localhost:8080/';
+    // private baseUrl = 'RideTrackerREST/'; // Prod
+    private url = environment.baseUrl + 'api/rides';
 
     index(): Observable<Ride[]> {
       const httpOptions = {
