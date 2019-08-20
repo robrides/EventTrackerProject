@@ -32,6 +32,7 @@ public class RideServiceImpl implements RideService {
 
 	@Override
 	public Ride addRide(Ride r) {
+		System.out.println(r);
 		return repo.saveAndFlush(r);
 	}
 
